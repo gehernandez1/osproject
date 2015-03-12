@@ -1,0 +1,11 @@
+#ignore bin directory
+bin/
+
+#ignore obj directory
+obj/
+
+#ignore code blocks files
+*.cbp
+
+#ignore layout files
+*.layout
