@@ -9,3 +9,9 @@ obj/
 
 #ignore layout files
 *.layout
+
+#ignore depend files
+*.depend
+
+#ignore pretty much anything that starts with osProject
+osProject.*
