@@ -1,8 +1,11 @@
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <pwd.h>
+//#include <unistd.h>
 #include "minishell.h"
+
+
 
 //prints prompt to screen
 void printPrompt();
@@ -31,18 +34,19 @@ char* lookupPath(char **,char **);
 //prints command prompt to screen
 void printPrompt()
 {
+    char cwd[1000];
+    getcwd(cwd,sizeof(cwd));
+
     char hostname[MAX_HOSTNAME] ;
-    size_t len  ;
+    size_t* len = 0 ;
     //geting the user name
     struct passwd *p = getpwuid(getuid());
 
     //geting the hostname
-    gethostname(hostname,len);
+    gethostname(hostname,&len);
 
     //prints the cmd prompt
-    printf("%s@%s>>\n",p->pw_name,hostname);
-
-
+    printf("%s@%s:%s$ \n",p->pw_name,hostname,cwd);
 
 
 }
@@ -50,7 +54,42 @@ void printPrompt()
 //reads a line of input
 void readCommand(char *buffer)
 {
-    size_t len ;
-    getline(&buffer,&len,stdin);
+    bool flag = TRUE ;
+    size_t bufferSize = LINE_LEN ;
+
+
+        getline(&buffer,&bufferSize,stdin);
+
+        if(bufferSize > LINE_LEN)
+        {
+            printf("Command line has exceed maximum number of characters\n");
+
+        }
+
+
+}
+
+//parses the command by taking the line and tokenizing into
+//array of character strings, returns one if successfull
+int parseCommand(char *cLine,struct command_t *cmd)
+{
+    int argc = 0; //number of tokens in array, initialized to zero
+    char** clPtr ;
+
+    clPtr = &cLine ; //command line obtained from user
+
+    cmd->argv[argc] = (char*)malloc(MAX_ARG_LEN);
+
+    while((cmd->argv[argc] = strsep(clPtr,WHITESPACE)) != NULL)
+    {
+        cmd->argv[++argc] = (char*)malloc(MAX_ARG_LEN);
+    }
+
+    cmd->argc = argc -1 ;
+    cmd->name = (char*)malloc(sizeof(cmd->argv[0]));
+    strcpy(cmd->name,cmd->argv[0]);
+
+    return 1 ;
+
 
 }

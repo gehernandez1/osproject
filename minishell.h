@@ -7,15 +7,11 @@
 #define MAX_PATHS   64
 #define MAX_PATH_LEN    96
 #define MAX_HOSTNAME    20
-#define TRUE 1
-#define FALSE 0
+//#define TRUE 1
+//#define FALSE 0
 #define WHITESPACE  " .,\t\n"
 
-#ifndef NULL
-#define NULL
-#endif
-
-
+typedef enum {FALSE, TRUE} bool ;
 
 
 struct command_t

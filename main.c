@@ -7,10 +7,29 @@ int main()
 {
 
 //shell initialization
-int flag = TRUE ;
-char* commandLine ;
 
-    //parsePath(pathv); //get directory paths from path
+char* commandLine = (char*)malloc(LINE_LEN);//holds the comamnd line inputed by the user
+
+struct command_t command ; //stores the tokenized command line
+
+
+printPrompt();
+
+readCommand(commandLine);
+
+parseCommand(commandLine, &command);
+int i = 0 ;
+for(i; i < command.argc ; i++)
+{
+    printf("%s\n",command.argv[i]);
+
+}
+
+
+
+
+/*
+    parsePath(pathv); //get directory paths from path
 
     while(flag)
     {
@@ -29,7 +48,7 @@ char* commandLine ;
         {
             //report error
             continue ;
-        }*/
+        }
         flag = FALSE ;
 
     }
@@ -40,7 +59,7 @@ char* commandLine ;
 //wait for the child to terminate
 
 //shell termination
+*/
 
-
-    return 0 ;
+    return EXIT_SUCCESS ;
 }
