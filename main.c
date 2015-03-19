@@ -1,26 +1,28 @@
+#include "helperFunctions.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "helperFunctions.h"
+
 
 
 int main()
 {
 
 //shell initialization
-char* pathv ; //array of paths obtained from the path environment variable
+char* pathv =(char*)calloc(MAX_PATHS,MAX_PATH_LEN); //array of paths obtained from the path environment variable
 
 char* commandLine = (char*)malloc(LINE_LEN);//holds the comamnd line inputed by the user
 
 struct command_t command ; //stores the tokenized command line
 
 
-parsePath(pathv);
+parsePath(&pathv);
 
-printPrompt();
 
-readCommand(commandLine);
+//printPrompt();
 
-parseCommand(commandLine, &command);
+//readCommand(commandLine);
+
+//parseCommand(commandLine, &command);
 
 
 
@@ -42,7 +44,7 @@ parseCommand(commandLine, &command);
         //get the full pathname for the file
         //command.name = lookupPath(command.argv,pathv);
 
-        /*if(command.name == NULL)
+        if(command.name == NULL)
         {
             //report error
             continue ;

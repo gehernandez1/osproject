@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <pwd.h>
-//#include <unistd.h>
+//#include <pwd.h>
 #include "minishell.h"
 
 
@@ -19,7 +18,7 @@ int parseCommand(char *,struct command_t *);
 
 //parses the PATH variable before it begins reading
 //command lines.
-int parsePath(char **);
+int parsePath(char**);
 
 //Chech if command is an excecutable file
 //in one of the directories specified by path
@@ -37,13 +36,13 @@ void printPrompt()
     char cwd[1000];
     getcwd(cwd,sizeof(cwd));
 
-    char hostname[MAX_HOSTNAME] ;
-    size_t* len = 0 ;
+    char hostname[MAX_HOSTNAME_LEN] ;
+
     //geting the user name
     struct passwd *p = getpwuid(getuid());
 
     //geting the hostname
-    gethostname(hostname,&len);
+    gethostname(hostname,MAX_HOSTNAME_LEN);
 
     //prints the cmd prompt
     printf("%s@%s>> ",p->pw_name,hostname);//,cwd);
@@ -54,7 +53,7 @@ void printPrompt()
 //reads a line of input
 void readCommand(char *buffer)
 {
-    bool flag = TRUE ;
+
     size_t bufferSize = LINE_LEN ;
 
 
@@ -102,31 +101,25 @@ int parsePath(char** dirs)
     char* pathEnvVar ;
     char* thePath ;
 
-    //initializes dirs to NULL
-    for(i =0 ; i < MAX_ARGS;i++)
+    for(i = 0 ; i < MAX_ARGS; i++)
     {
-        dirs[i] == NULL ;
-        //printf("%s\n",dirs[i]);
-
+        dirs[i] = NULL ;
     }
 
-    //set i back to zero for storing
-    i = 0;
-
-    pathEnvVar = (char*) getenv("PATH");
-    thePath = (char*) malloc(strlen(pathEnvVar)+1);
+    pathEnvVar = (char*)getenv("PATH");
+    thePath = (char*)malloc(strlen(pathEnvVar)+1);
     strcpy(thePath,pathEnvVar);
 
-    printf("%d\n",i);
-    //dirs[i] = (char*)malloc(MAX_PATH_LEN);
+    i = 0 ;
 
-    /*while((dirs[i] = strsep(thePath,WHITESPACE)) != NULL )//&& i < MAX_PATH_LEN)
+    dirs[i]= (char*)malloc(MAX_PATH_LEN);
+    dirs[i]= strtok(thePath,":");
+
+    while(dirs[i] != NULL)
     {
-        printf("%s\n",dirs[i]);
         dirs[++i] = (char*)malloc(MAX_PATH_LEN);
+        dirs[i] = strtok(NULL,":");
     }
-*/
-
 
     return 0 ;
 }
