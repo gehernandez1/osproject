@@ -115,6 +115,7 @@ int parsePath(char** dirs)
     dirs[i]= (char*)malloc(MAX_PATH_LEN);
     dirs[i]= strtok(thePath,":");
 
+
     while(dirs[i] != NULL)
     {
         dirs[++i] = (char*)malloc(MAX_PATH_LEN);

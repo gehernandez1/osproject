@@ -17,7 +17,6 @@ struct command_t command ; //stores the tokenized command line
 
 parsePath(&pathv);
 
-
 //printPrompt();
 
 //readCommand(commandLine);
