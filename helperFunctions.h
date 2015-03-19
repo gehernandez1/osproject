@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <pwd.h>
 #include "minishell.h"
 
 
@@ -57,13 +56,13 @@ void readCommand(char *buffer)
     size_t bufferSize = LINE_LEN ;
 
 
-        getline(&buffer,&bufferSize,stdin);
+    getline(&buffer,&bufferSize,stdin);
 
-        if(bufferSize > LINE_LEN)
-        {
-            printf("Command line has exceed maximum number of characters\n");
+    if(bufferSize > LINE_LEN)
+    {
+        printf("Command line has exceed maximum number of characters\n");
 
-        }
+    }
 
 
 }
@@ -124,3 +123,44 @@ int parsePath(char** dirs)
 
     return 0 ;
 }
+
+//Chech if command is an excecutable file
+//in one of the directories specified by path
+//returns the full path name to the file
+char* lookupPath(char ** argv,char **dir)
+{
+    int i = 0 ;
+    char* result ;
+    char pName[MAX_PATH_LEN];
+
+
+    if(*argv[0] == '/')
+    {
+        printf("Do something later\n");
+    }
+
+    while(dir[i] != NULL)
+    {
+        strcpy(pName,dir[i]);
+        strcat(pName,"/");
+        strcat(pName,argv[0]);
+
+        if((access(pName,F_OK)) != -1)
+        {
+            result = (char*)malloc(sizeof(pName));
+            strcat(pName,"/");
+            strcpy(result,pName);
+
+            return result;
+        }
+
+        i++ ;
+    }
+
+
+    return NULL ;
+}
+
+
+
+
