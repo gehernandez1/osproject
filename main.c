@@ -7,23 +7,21 @@ int main()
 {
 
 //shell initialization
+char* pathv ; //array of paths obtained from the path environment variable
 
 char* commandLine = (char*)malloc(LINE_LEN);//holds the comamnd line inputed by the user
 
 struct command_t command ; //stores the tokenized command line
 
 
+parsePath(pathv);
+
 printPrompt();
 
 readCommand(commandLine);
 
 parseCommand(commandLine, &command);
-int i = 0 ;
-for(i; i < command.argc ; i++)
-{
-    printf("%s\n",command.argv[i]);
 
-}
 
 
 
@@ -61,5 +59,5 @@ for(i; i < command.argc ; i++)
 //shell termination
 */
 
-    return EXIT_SUCCESS ;
+   exit(EXIT_SUCCESS) ;
 }

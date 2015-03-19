@@ -46,7 +46,7 @@ void printPrompt()
     gethostname(hostname,&len);
 
     //prints the cmd prompt
-    printf("%s@%s:%s$ \n",p->pw_name,hostname,cwd);
+    printf("%s@%s>> ",p->pw_name,hostname);//,cwd);
 
 
 }
@@ -92,4 +92,41 @@ int parseCommand(char *cLine,struct command_t *cmd)
     return 1 ;
 
 
+}
+
+//parses the PATH variable before it begins reading
+//command lines.
+int parsePath(char** dirs)
+{
+    int i = 0 ;
+    char* pathEnvVar ;
+    char* thePath ;
+
+    //initializes dirs to NULL
+    for(i =0 ; i < MAX_ARGS;i++)
+    {
+        dirs[i] == NULL ;
+        //printf("%s\n",dirs[i]);
+
+    }
+
+    //set i back to zero for storing
+    i = 0;
+
+    pathEnvVar = (char*) getenv("PATH");
+    thePath = (char*) malloc(strlen(pathEnvVar)+1);
+    strcpy(thePath,pathEnvVar);
+
+    printf("%d\n",i);
+    //dirs[i] = (char*)malloc(MAX_PATH_LEN);
+
+    /*while((dirs[i] = strsep(thePath,WHITESPACE)) != NULL )//&& i < MAX_PATH_LEN)
+    {
+        printf("%s\n",dirs[i]);
+        dirs[++i] = (char*)malloc(MAX_PATH_LEN);
+    }
+*/
+
+
+    return 0 ;
 }
