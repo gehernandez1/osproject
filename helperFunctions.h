@@ -44,7 +44,7 @@ void printPrompt()
     gethostname(hostname,MAX_HOSTNAME_LEN);
 
     //prints the cmd prompt
-    printf("%s@%s>> ",p->pw_name,hostname);//,cwd);
+    printf("%s@%s: %s>> ",p->pw_name,hostname,cwd);//,cwd);
 
 
 }
@@ -136,7 +136,7 @@ char* lookupPath(char ** argv,char **dir)
 
     if(*argv[0] == '/')
     {
-        printf("Do something later\n");
+        printf("do something");
     }
 
     while(dir[i] != NULL)
@@ -147,8 +147,7 @@ char* lookupPath(char ** argv,char **dir)
 
         if((access(pName,F_OK)) != -1)
         {
-            result = (char*)malloc(sizeof(pName));
-            strcat(pName,"/");
+            result = (char*)malloc(strlen(pName));
             strcpy(result,pName);
 
             return result;

@@ -8,21 +8,23 @@ int main()
 {
 
 //shell initialization
-char** pathv =(char*)calloc(MAX_PATHS,MAX_PATH_LEN); //array of paths obtained from the path environment variable
+    char** pathv =(char*)calloc(MAX_PATHS,MAX_PATH_LEN); //array of paths obtained from the path environment variable
 
-char* commandLine = (char*)malloc(LINE_LEN);//holds the comamnd line inputed by the user
+    char* commandLine = (char*)malloc(LINE_LEN);//holds the comamnd line inputed by the user
 
-struct command_t command ; //stores the tokenized command line
+    struct command_t command ; //stores the tokenized command line
 
-bool flag = TRUE ;
+    bool flag = TRUE ;
 
-int pid, status ;
+    int pid, status ;
 
 
     parsePath(pathv); //get directory paths from path
 
-    while(flag)
+    while(strcmp(commandLine,"exit") != 0 )
     {
+        strcpy(commandLine," ");
+
         printPrompt();
 
 
@@ -35,31 +37,30 @@ int pid, status ;
         command.name = lookupPath(command.argv,pathv);
 
 
-        if(command.name == NULL)
+
+        if(command.name == NULL && strcmp(commandLine,"exit") != 0)
         {
             //report error
             printf("Command does not exist\n");
             continue ;
         }
         if(command.argv[command.argc] != NULL)
-            command.argv[command.argc]== NULL ;
+            command.argv[command.argc] = NULL ;
 
-        flag = FALSE ;
+
+
+        //create child and execute the command
+        if(pid = fork() == 0)
+        {
+            execv(command.name,command.argv);
+
+        }
+
+        //wait for the child to terminate
+        wait(&status);
+
 
     }
-
-//create child and execute the command
-if(pid = fork() == 0)
-{
-    printf("%s\n",command.name);
-    execv(command.name,command.argv);
-
-}
-
-//wait for the child to terminate
-wait(&status);
-//shell termination
-
-
-   exit(EXIT_SUCCESS) ;
+    //shell termination
+    exit(EXIT_SUCCESS) ;
 }

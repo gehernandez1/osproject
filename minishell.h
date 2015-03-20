@@ -8,7 +8,7 @@
 #define MAX_PATHS   64
 #define MAX_PATH_LEN    96
 #define MAX_HOSTNAME_LEN   20
-#define WHITESPACE  " .,\t\n"
+#define WHITESPACE  " ,\t\n"
 
 typedef enum {FALSE, TRUE} bool ;
 
