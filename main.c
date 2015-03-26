@@ -23,7 +23,6 @@ int main()
 
     while(strcmp(commandLine,"exit") != 0 )
     {
-        strcpy(commandLine," ");
 
         printPrompt();
 

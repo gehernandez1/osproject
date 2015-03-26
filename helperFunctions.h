@@ -136,7 +136,9 @@ char* lookupPath(char ** argv,char **dir)
 
     if(*argv[0] == '/')
     {
-        printf("do something");
+        result = (char*)malloc(strlen(argv[0]));
+        strcpy(result,argv[0]);
+        return result ;
     }
 
     while(dir[i] != NULL)
